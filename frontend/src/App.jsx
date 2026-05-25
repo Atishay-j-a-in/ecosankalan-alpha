@@ -87,7 +87,7 @@ export default function App() {
 
       const response =
         await axios.post(
-          "http://localhost:5000/api/analyze",
+          `${import.meta.env.VITE_API_URL}/api/analyze`,
           formData
         );
 
