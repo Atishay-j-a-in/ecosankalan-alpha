@@ -78,7 +78,7 @@ export default function App() {
       setWarmingUp(false);
     }
   }
- 
+
   const [images, setImages] =
     useState([]);
 
@@ -91,97 +91,6 @@ export default function App() {
   const [results, setResults] =
     useState([]);
 
-  {/* BACKEND STATUS */ }
-
-  <div className="mb-8">
-
-    {!backendReady ? (
-      <div
-        className="
-        bg-zinc-900
-        border
-        border-zinc-800
-        rounded-3xl
-        p-6
-      "
-      >
-
-        <div className="flex items-center justify-between gap-6 flex-wrap">
-
-          <div>
-
-            <h2 className="text-2xl font-bold">
-              Backend Service
-            </h2>
-
-            <p className="text-zinc-400 mt-2">
-              Render backend may sleep on free tier.
-            </p>
-
-            {!!healthMessage && (
-              <p className="mt-4 text-green-400">
-                {healthMessage}
-              </p>
-            )}
-
-          </div>
-
-          <button
-            onClick={wakeBackend}
-            disabled={warmingUp}
-            className="
-            bg-green-500
-            hover:bg-green-400
-            transition
-            text-black
-            font-semibold
-            px-6
-            py-3
-            rounded-2xl
-            disabled:opacity-50
-            flex
-            items-center
-            gap-3
-          "
-          >
-
-            {warmingUp ? (
-              <>
-                <Loader2 className="animate-spin" />
-
-                Spinning Up...
-              </>
-            ) : (
-              "Start Backend"
-            )}
-
-          </button>
-
-        </div>
-      </div>
-    ) : (
-      <div
-        className="
-        bg-green-500/10
-        border
-        border-green-500/20
-        rounded-3xl
-        p-6
-      "
-      >
-
-        <div className="text-green-300 font-semibold text-lg">
-          Backend Ready
-        </div>
-
-        <p className="text-green-400 mt-2">
-          You can now proceed with testing.
-        </p>
-
-      </div>
-    )}
-
-  </div>
   /* -------------------------------- */
   /* DROPZONE */
   /* -------------------------------- */
@@ -312,6 +221,99 @@ export default function App() {
       {/* MAIN */}
 
       <div className="max-w-7xl mx-auto px-6 py-10">
+
+        {/* BACKEND STATUS */}
+
+        <div className="mb-8">
+
+
+          {!backendReady ? (
+            <div
+              className="
+        bg-zinc-900
+        border
+        border-zinc-800
+        rounded-3xl
+        p-6
+      "
+            >
+
+              <div className="flex items-center justify-between gap-6 flex-wrap">
+
+                <div>
+
+                  <h2 className="text-2xl font-bold">
+                    Backend Service
+                  </h2>
+
+                  <p className="text-zinc-400 mt-2">
+                    Render backend may sleep on free tier.
+                  </p>
+
+                  {!!healthMessage && (
+                    <p className="mt-4 text-green-400">
+                      {healthMessage}
+                    </p>
+                  )}
+
+                </div>
+
+                <button
+                  onClick={wakeBackend}
+                  disabled={warmingUp}
+                  className="
+            bg-green-500
+            hover:bg-green-400
+            transition
+            text-black
+            font-semibold
+            px-6
+            py-3
+            rounded-2xl
+            disabled:opacity-50
+            flex
+            items-center
+            gap-3
+          "
+                >
+
+                  {warmingUp ? (
+                    <>
+                      <Loader2 className="animate-spin" />
+
+                      Spinning Up...
+                    </>
+                  ) : (
+                    "Start Backend"
+                  )}
+
+                </button>
+
+              </div>
+            </div>
+          ) : (
+            <div
+              className="
+        bg-green-500/10
+        border
+        border-green-500/20
+        rounded-3xl
+        p-6
+      "
+            >
+
+              <div className="text-green-300 font-semibold text-lg">
+                Backend Ready
+              </div>
+
+              <p className="text-green-400 mt-2">
+                You can now proceed with testing.
+              </p>
+
+            </div>
+          )}
+
+        </div>
 
         {/* DROPZONE */}
 
