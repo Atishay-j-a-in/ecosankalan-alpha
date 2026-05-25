@@ -78,14 +78,7 @@ export default function App() {
       setWarmingUp(false);
     }
   }
-  const [backendReady, setBackendReady] =
-    useState(false);
-
-  const [warmingUp, setWarmingUp] =
-    useState(false);
-
-  const [healthMessage, setHealthMessage] =
-    useState("");
+ 
   const [images, setImages] =
     useState([]);
 
