@@ -4,6 +4,7 @@ const {
   MAX_FILE_SIZE,
   MAX_IMAGE_DIMENSION,
   IMAGE_QUALITY,
+  COMPRESS_OVER_BYTES,
 } = require("../config/env");
 
 const storage = multer.memoryStorage();
@@ -23,6 +24,10 @@ const resizeImages = async (req, res, next) => {
   try {
     const resized = await Promise.all(
       req.files.map(async (file) => {
+        if (file.size <= COMPRESS_OVER_BYTES) {
+          return file;
+        }
+
         const buffer = await sharp(file.buffer)
           .rotate()
           .resize({

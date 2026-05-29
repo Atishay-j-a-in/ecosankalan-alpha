@@ -20,6 +20,10 @@ const MAX_FILE_SIZE = toNumber(
 const MAX_FILES = toNumber(process.env.MAX_FILES, 10);
 const MAX_IMAGE_DIMENSION = toNumber(process.env.MAX_IMAGE_DIMENSION, 1024);
 const IMAGE_QUALITY = toNumber(process.env.IMAGE_QUALITY, 80);
+const COMPRESS_OVER_BYTES = toNumber(
+  process.env.COMPRESS_OVER_BYTES,
+  1024 * 512
+);
 
 module.exports = {
   PORT,
@@ -29,4 +33,5 @@ module.exports = {
   MAX_FILES,
   MAX_IMAGE_DIMENSION,
   IMAGE_QUALITY,
+  COMPRESS_OVER_BYTES,
 };
