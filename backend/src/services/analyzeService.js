@@ -1,6 +1,10 @@
 const { performance } = require("perf_hooks");
 const client = require("./openaiClient");
-const { wasteSchema } = require("../config/schema");
+const {
+  wasteSchema,
+  wasteCoreSchema,
+  wasteReuseSchema,
+} = require("../config/schema");
 const { buildInput } = require("../utils/buildInput");
 const { MODELS } = require("../config/models");
 
@@ -10,7 +14,13 @@ const extractOutputText = (response) => {
     .find((content) => content.type === "output_text")?.text;
 };
 
-const runModel = async (modelName, files, basePrompt, modelPrompts) => {
+const runModel = async (
+  modelName,
+  files,
+  basePrompt,
+  modelPrompts,
+  schema = wasteSchema
+) => {
   const started = performance.now();
 
   try {
@@ -22,7 +32,7 @@ const runModel = async (modelName, files, basePrompt, modelPrompts) => {
           type: "json_schema",
           name: "waste_detection",
           strict: true,
-          schema: wasteSchema,
+          schema,
         },
       },
     });
@@ -140,8 +150,20 @@ const runPipeline = async (files, basePrompt, modelPrompts) => {
   const started = performance.now();
 
   const [result41, result54] = await Promise.all([
-    runModel(MODELS.gpt41, files, basePrompt, modelPrompts),
-    runModel(MODELS.gpt54, files, basePrompt, modelPrompts),
+    runModel(
+      MODELS.gpt41,
+      files,
+      basePrompt,
+      modelPrompts,
+      wasteCoreSchema
+    ),
+    runModel(
+      MODELS.gpt54,
+      files,
+      basePrompt,
+      modelPrompts,
+      wasteReuseSchema
+    ),
   ]);
 
   if (!result41.success && !result54.success) {

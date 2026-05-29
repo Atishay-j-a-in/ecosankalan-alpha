@@ -31,11 +31,13 @@ const MODEL_PROMPTS = {
   "gpt-5.4": `
 Be concise and highly accurate.
 Use practical environmental guidance.
+Only provide reuse-focused fields: reuseIdeas, beforeThrowing, betterAlternatives, specialHandling, plus imageIndex.
 `,
 
   "gpt-4.1": `
 Be structured and concise.
 Avoid unnecessary explanations.
+Only provide core fields: identifiedObject, material, wasteCategory, binColor, environmentFriendlyLevel, recyclable, canBeReused, hazardLevel, confidence, plus imageIndex.
 `,
 };
 
