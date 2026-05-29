@@ -18,6 +18,8 @@ const MAX_FILE_SIZE = toNumber(
   10 * 1024 * 1024
 );
 const MAX_FILES = toNumber(process.env.MAX_FILES, 10);
+const MAX_IMAGE_DIMENSION = toNumber(process.env.MAX_IMAGE_DIMENSION, 1024);
+const IMAGE_QUALITY = toNumber(process.env.IMAGE_QUALITY, 80);
 
 module.exports = {
   PORT,
@@ -25,4 +27,6 @@ module.exports = {
   JSON_LIMIT,
   MAX_FILE_SIZE,
   MAX_FILES,
+  MAX_IMAGE_DIMENSION,
+  IMAGE_QUALITY,
 };

@@ -1,5 +1,10 @@
 const multer = require("multer");
-const { MAX_FILE_SIZE } = require("../config/env");
+const sharp = require("sharp");
+const {
+  MAX_FILE_SIZE,
+  MAX_IMAGE_DIMENSION,
+  IMAGE_QUALITY,
+} = require("../config/env");
 
 const storage = multer.memoryStorage();
 
@@ -10,6 +15,43 @@ const upload = multer({
   },
 });
 
+const resizeImages = async (req, res, next) => {
+  if (!req.files?.length) {
+    return next();
+  }
+
+  try {
+    const resized = await Promise.all(
+      req.files.map(async (file) => {
+        const buffer = await sharp(file.buffer)
+          .rotate()
+          .resize({
+            width: MAX_IMAGE_DIMENSION,
+            height: MAX_IMAGE_DIMENSION,
+            fit: "inside",
+            withoutEnlargement: true,
+          })
+          .flatten({ background: "#ffffff" })
+          .jpeg({ quality: IMAGE_QUALITY, mozjpeg: true })
+          .toBuffer();
+
+        return {
+          ...file,
+          buffer,
+          mimetype: "image/jpeg",
+          size: buffer.length,
+        };
+      })
+    );
+
+    req.files = resized;
+    return next();
+  } catch (error) {
+    return next(error);
+  }
+};
+
 module.exports = {
   upload,
+  resizeImages,
 };

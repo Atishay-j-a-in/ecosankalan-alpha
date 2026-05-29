@@ -1,5 +1,5 @@
 const express = require("express");
-const { upload } = require("../middleware/upload");
+const { upload, resizeImages } = require("../middleware/upload");
 const { asyncHandler } = require("../middleware/asyncHandler");
 const { createHttpError } = require("../utils/httpError");
 const { MODEL_LIST } = require("../config/models");
@@ -12,6 +12,7 @@ const router = express.Router();
 router.post(
   "/analyze",
   upload.array("images", MAX_FILES),
+  resizeImages,
   asyncHandler(async (req, res) => {
     const files = req.files;
 
