@@ -2,10 +2,9 @@ const express = require("express");
 const { upload, resizeImages } = require("../middleware/upload");
 const { asyncHandler } = require("../middleware/asyncHandler");
 const { createHttpError } = require("../utils/httpError");
-const { MODEL_LIST } = require("../config/models");
 const { BASE_PROMPT, MODEL_PROMPTS } = require("../config/prompts");
 const { MAX_FILES } = require("../config/env");
-const { runAllModels } = require("../services/analyzeService");
+const { runPipeline } = require("../services/analyzeService");
 
 const router = express.Router();
 
@@ -20,8 +19,7 @@ router.post(
       throw createHttpError(400, "No images uploaded");
     }
 
-    const results = await runAllModels(
-      MODEL_LIST,
+    const pipelineResult = await runPipeline(
       files,
       BASE_PROMPT,
       MODEL_PROMPTS
@@ -29,8 +27,8 @@ router.post(
 
     res.json({
       success: true,
-      totalModels: MODEL_LIST.length,
-      results,
+      totalModels: 1,
+      results: [pipelineResult],
     });
   })
 );
